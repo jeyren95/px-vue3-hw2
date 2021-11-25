@@ -24,9 +24,12 @@
             RM 
             <span class="text-2xl font-bold">{{ price }}</span>
           </div>
-          <div class="text-sm text-gray-500">
+          <div v-if="availability !== 'single-item'" class="text-sm text-gray-500">
             {{ numOfStock }} piece available
           </div>
+          <span v-else class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+            Only One
+          </span>
         </div>
       </div>
 
@@ -40,18 +43,24 @@
 
 
       <div class="flex flex-col md:flex-row gap-3 py-3">
-        <Button type="button" class="border-transparent  text-white bg-pink-600 hover:bg-pink-700">
+        <Button 
+        type="button" 
+        class="border-transparent  text-white bg-pink-600 hover:bg-pink-700"
+        @click="handleFetchItem"
+        >
           <PencilIcon class="h-5 w-5 mr-2" />  
           Edit
         </Button>
-        <Button type="button" class="border-pink-500 text-pink-500 bg-white hover:text-pink-700">
+        <Button 
+        type="button" 
+        class="border-pink-500 text-pink-500 bg-white hover:text-pink-700"
+        @click="handleDeleteItem"
+        >
           <TrashIcon class="h-5 w-5 mr-2" />
           Delete
         </Button>
       </div>
-
     </div>
-
 
   </div>
 </template>
@@ -68,7 +77,15 @@ export default {
     TrashIcon,
     PencilIcon
   },
-  props: ["title", "imageUrl", "description", "price", "availability", "numOfStock", "condition"]
+  props: ["id", "title", "imageUrl", "description", "price", "availability", "numOfStock", "condition"],
+  methods: {
+    handleDeleteItem() {
+      this.$emit("delete-item", this.id)
+    },
+    handleFetchItem() {
+      this.$emit("fetch-item", this.id)
+    }
+  }
 }
 
 </script>

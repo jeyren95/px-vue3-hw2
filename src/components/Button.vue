@@ -1,6 +1,6 @@
 <template>
   <button 
-  type="type" 
+  :type="type" 
   class="
   inline-flex 
   justify-center 
